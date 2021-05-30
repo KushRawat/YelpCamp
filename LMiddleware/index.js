@@ -16,6 +16,14 @@ app.use('/dogs', (req, res, next) => {
     next()
 })
 
+app.use((req, res, next) => {
+    const { password } = req.query
+    if (password === 'chickennugget') {
+        next()
+    }
+    res.send('SORRY YOU NEED A PASSWORD!!!')
+})
+
 // middleware
 // app.use(morgan('dev'))
 
@@ -41,6 +49,10 @@ app.get('/', (req, res) => {
 app.get('/dogs', (req, res) => {
     console.log(`REQUEST DATE: ${req.requestTime}`)
     res.send('Woof Woof!')
+})
+
+app.get('/secrets', (req, res) => {
+   res.send("MY SECRET IS: Sometimes i wear headphones in public so i don't have to talk tp them") 
 })
 
 app.use((req, res) => {
