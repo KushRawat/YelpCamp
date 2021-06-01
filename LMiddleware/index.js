@@ -21,7 +21,8 @@ const verifyPassword = ((req, res, next) => {
     if (password === 'chickennugget') {
         next()
     }
-    res.send('SORRY YOU NEED A PASSWORD!!!')
+    // res.send('SORRY YOU NEED A PASSWORD!!!')
+    throw new Error('Password required')
 })
 
 // middleware
@@ -46,6 +47,11 @@ app.get('/', (req, res) => {
     console.log(`REQUEST DATE: ${req.requestTime}`)
     res.send('Welcome Home!')
 })
+
+app.get('/error', (req, res) => {
+    chicken.fly()
+})
+
 app.get('/dogs', (req, res) => {
     console.log(`REQUEST DATE: ${req.requestTime}`)
     res.send('Woof Woof!')
