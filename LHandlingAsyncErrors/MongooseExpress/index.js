@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
+const AppError = require("./AppError");
 
 const Product = require("./models/product");
 
@@ -41,16 +42,22 @@ app.post("/products", async (req, res) => {
   res.redirect(`/products/${newProduct._id}`);
 });
 // R
-app.get("/products/:id", async (req, res) => {
+app.get("/products/:id", async (req, res, next) => {
   const { id } = req.params;
   const foundProduct = await Product.findById(id);
+  if (!foundProduct) {
+    return next(new AppError("Product not found", 404));
+  }
   console.log(foundProduct);
   res.render("products/show", { foundProduct });
 });
 // U
-app.get("/products/:id/edit", async (req, res) => {
+app.get("/products/:id/edit", async (req, res, next) => {
   const { id } = req.params;
   const foundProduct = await Product.findById(id);
+  if (!foundProduct) {
+    return next(new AppError("Product not found", 404));
+  }
   res.render("products/edit", { foundProduct, categories });
 });
 
@@ -67,6 +74,12 @@ app.delete("/products/:id", async (req, res) => {
   const { id } = req.params;
   const deletedProduct = await Product.findByIdAndDelete(id);
   res.redirect("/products");
+});
+
+// BASIC ERROR HANDLING MIDDLEWARE
+app.use((err, req, res, next) => {
+  const { status = 500, message = "Something went wrong" } = err;
+  res.status(status).send(message);
 });
 
 app.listen(3000, () => {
