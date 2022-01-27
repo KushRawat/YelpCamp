@@ -88,7 +88,21 @@ app.delete("/products/:id", async (req, res) => {
     res.redirect("/products");
 });
 
+// MONGOOSE ERROR
+
+const handleValidatioErr = (err) => {
+    console.dir(err);
+    return new AppError(`Validation Failed...${err.message}`, 400);
+};
+
+app.use((err, req, res, next) => {
+    console.log(err.name);
+    if (err.name === "ValidationError") err = handleValidatioErr(err);
+    next(err);
+});
+
 // BASIC ERROR HANDLING MIDDLEWARE
+
 app.use((err, req, res, next) => {
     const { status = 500, message = "Something went wrong" } = err;
     res.status(status).send(message);
