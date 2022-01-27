@@ -74,7 +74,7 @@ app.delete("/campgrounds/:id", async (req, res) => {
     res.redirect("/campgrounds");
 });
 
-// ERROR HANDLER
+// BASIC ERROR HANDLER
 app.use((err, req, res, next) => {
     res.send("Oh boy, somethiing went wrong");
 });
