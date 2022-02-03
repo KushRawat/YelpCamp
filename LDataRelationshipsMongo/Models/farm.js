@@ -54,4 +54,6 @@ const addProduct = async () => {
     console.log(farm);
 };
 
-addProduct()
+// addProduct()
+
+Farm.findOne({ name: "Farm 1" }).populate('products').then((farm) => console.log(farm));
