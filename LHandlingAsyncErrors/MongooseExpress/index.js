@@ -38,8 +38,14 @@ app.get("/farms/new", (req, res) => {
 
 app.get("/farms/:id", async (req, res) => {
     const farm = await Farm.findById(req.params.id).populate("products");
-    console.log(farm);
+    // console.log(farm);
     res.render("farms/show", { farm });
+});
+
+app.delete("/farms/:id", async (req, res) => {
+    console.log("Deleting!")
+    const farm = await Farm.findByIdAndDelete(req.params.id)
+    res.redirect("/farms")
 });
 
 app.get("/farms/:id/products/new", async (req, res) => {
@@ -94,11 +100,11 @@ app.post("/products", async (req, res, next) => {
 // R
 app.get("/products/:id", async (req, res, next) => {
     const { id } = req.params;
-    const foundProduct = await Product.findById(id).populate('farm','name');
+    const foundProduct = await Product.findById(id).populate("farm", "name");
     if (!foundProduct) {
         return next(new AppError("Product not found", 404));
     }
-    console.log(foundProduct);
+    // console.log(foundProduct);
     res.render("products/show", { foundProduct });
 });
 // U
