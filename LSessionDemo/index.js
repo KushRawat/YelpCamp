@@ -16,7 +16,7 @@ app.get("/pagecount", (req, res) => {
         req.session.count = 1;
     }
     res.send(`You have visited this page ${req.session.count} times `);
-});f
+});
 
 app.get("/register", (req, res) => {
     const { username = "Anonymous" } = req.query;
