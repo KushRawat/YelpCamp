@@ -35,11 +35,16 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
+app.use((req, res, next) => {
+    res.locals.message = req.flash("success");
+    next();
+});
+
 // FARM ROUTES
 
 app.get("/farms", async (req, res) => {
     const farms = await Farm.find({});
-    res.render("farms/index", { farms, message: req.flash("success") });
+    res.render("farms/index", { farms });
 });
 
 app.get("/farms/new", (req, res) => {
