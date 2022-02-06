@@ -2,7 +2,12 @@ const express = require("express");
 const app = express();
 const session = require("express-session");
 
-app.use(session({ secret: "myS ecret" }));
+const sessionOptions = {
+    secret: "mySecret",
+    resave: false,
+    saveUninitialized: false,
+};
+app.use(session(sessionOptions));
 
 app.get("/pagecount", (req, res) => {
     if (req.session.count) {
@@ -11,6 +16,16 @@ app.get("/pagecount", (req, res) => {
         req.session.count = 1;
     }
     res.send(`You have visited this page ${req.session.count} times `);
+});f
+
+app.get("/register", (req, res) => {
+    const { username = "Anonymous" } = req.query;
+    req.session.username = username;
+    res.redirect("/greet");
+});
+
+app.get("/greet", (req, res) => {
+    res.send(`What's up ${req.session.username}`);
 });
 
 app.listen(3000, () => {
