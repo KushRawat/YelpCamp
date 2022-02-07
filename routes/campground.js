@@ -8,7 +8,6 @@ const { campgroundSchema } = require("../schemas");
 
 const Campground = require("../models/campground");
 
-
 const validateCampground = (req, res, next) => {
     const { error } = campgroundSchema.validate(req.body);
     // console.log(result);
@@ -20,7 +19,7 @@ const validateCampground = (req, res, next) => {
     }
 };
 
-router.get(
+router.get( 
     "/",
     catchAsync(async (req, res) => {
         const campgrounds = await Campground.find({});
@@ -41,6 +40,7 @@ router.post(
 
         const campground = new Campground(req.body.campground);
         await campground.save();
+        req.flash("success", "Successfully created a campground!");
         res.redirect(`/campgrounds/${campground._id}`);
     })
 );
