@@ -41,7 +41,7 @@ app.post("/register", async (req, res) => {
     const hash = await bcrypt.hash(password, 12);
     const user = new User({ username, password: hash });
     await user.save();
-    req.session.user_id = user._id
+    req.session.user_id = user._id;
     res.redirect("/secret");
 });
 
@@ -59,12 +59,18 @@ app.post("/login", async (req, res) => {
     }
 });
 
+app.post("/logout", (req, res) => {
+    req.session.user_id = null;
+    // req.session.destroy()
+    res.redirect("/login");
+});
+
 app.get("/secret", async (req, res) => {
     if (!req.session.user_id) {
         return res.redirect("/login");
     }
     // console.log(req.session.user_id)
-    res.send("This is a secret. you cant see me unitl you are logged in");
+    res.render("secret");
 });
 
 app.listen(3000, () => {
