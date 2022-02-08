@@ -24,6 +24,13 @@ app.set("views", "views");
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: "thisisnotagoodsecret" }));
 
+const requireLogin = (req, res, next) => {
+    if (!req.session.user_id) {
+        return res.redirect("/login");
+    }
+    next();
+};
+
 app.get("/", (req, res) => {
     res.send("THIS IS HOME PAGE");
 });
@@ -65,10 +72,10 @@ app.post("/logout", (req, res) => {
     res.redirect("/login");
 });
 
-app.get("/secret", async (req, res) => {
-    if (!req.session.user_id) {
-        return res.redirect("/login");
-    }
+app.get("/secret", requireLogin, (req, res) => {
+    // if (!req.session.user_id) {
+    //     return res.redirect("/login");
+    // }
     // console.log(req.session.user_id)
     res.render("secret");
 });
