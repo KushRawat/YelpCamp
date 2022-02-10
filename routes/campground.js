@@ -23,7 +23,7 @@ const validateCampground = (req, res, next) => {
 
 router.get(
     "/",
-    isLoggedIn,
+
     catchAsync(async (req, res) => {
         const campgrounds = await Campground.find({});
         res.render("campgrounds/index", { campgrounds });
