@@ -15,7 +15,6 @@ router.post(
             const { username, password, email } = req.body;
             const user = new User({ username, email });
             const registeredUser = await User.register(user, password);
-            console.log(registeredUser);
             req.login(registeredUser, (err) => {
                 if (err) return next(err);
                 req.flash("success", "Welcome to YelpCamp");
