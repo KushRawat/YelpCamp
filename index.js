@@ -60,6 +60,7 @@ app.use((req, res, next) => {
     // if (!["/", "/register", "/login"].includes(req.originalUrl)) {
     //     req.session.returnTo = req.originalUrl;
     // }
+    // console.log(req.user);
     res.locals.currUser = req.user;
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
