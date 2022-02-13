@@ -2,6 +2,8 @@
 (function () {
     "use strict";
 
+    bsCustomFileInput.init();
+
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     var forms = document.querySelectorAll(".validated-form");
 
@@ -12,7 +14,7 @@
             function (event) {
                 if (!form.checkValidity()) {
                     event.preventDefault();
-                    event.stopPropagation(); 
+                    event.stopPropagation();
                 }
 
                 form.classList.add("was-validated");
