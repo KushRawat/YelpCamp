@@ -1,9 +1,7 @@
 <% layout('layouts/boilerplate')%>
 <link rel="stylesheet" href="/stylesheets/stars.css" />
-
 <div class="row">
     <div class="col-6">
-        <div id="map" style="width: 100%; height: 300px"></div>
         <div
             id="campgroundCarousel"
             class="carousel slide"
@@ -78,6 +76,8 @@
         </div>
     </div>
     <div class="col-6">
+        <div id="map" style="width: 100%; height: 300px"></div>
+
         <% if(currUser){ %>
         <h2>Leave a Review</h2>
         <form
